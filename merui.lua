@@ -943,12 +943,12 @@ function Library:create(options)
 
 	settingsTab:_theme_selector()
 
-	local hideKeyBind = settingsTab:keybind{
+	saveKeyBind = settingsTab:keybind{
 		Name = "Toggle Key",
 		Description = "Key to show/hide the UI.",
 		Keybind = Enum.KeyCode[settings.Keybind],
 		Callback = function()
-            pcall(function() updateSettings("Keybind", (hideKeyBind:Get()).Name) end)
+            pcall(function() updateSettings("Keybind", (saveKeyBind:Get()).Name) end)
 
 			self.Toggled = not self.Toggled
 			Library:show(self.Toggled)
