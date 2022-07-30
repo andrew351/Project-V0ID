@@ -475,6 +475,43 @@ local function saveSettings()
     return SaveSystem:Edit("MercuryUI", "Config", settings)
 end
 
+function GetExploit()
+    local Table = {}
+    Table.Synapse = syn
+    Table.ProtoSmasher = pebc_create
+    Table.Sentinel = issentinelclosure
+    Table.ScriptWare = getexecutorname
+
+    for ExploitName, ExploitFunction in next, Table do
+        if (ExploitFunction) then
+            return ExploitName
+        end
+    end
+
+    return "Undefined"
+end
+
+CoreGuiService = game:GetService("CoreGui")
+ProtectFunctions = {}
+ProtectFunctions.Synapse = function(GuiObject)
+    syn.protect_gui(GuiObject)
+    GuiObject.Parent = CoreGuiService
+end
+ProtectFunctions.ProtoSmasher = function(GuiObject)
+    GuiObject.Parent = get_hidden_gui()
+end
+ProtectFunctions.Sentinel = function(GuiObject)
+    GuiObject.Parent = CoreGuiService
+end
+ProtectFunctions.ScriptWare = function(GuiObject)
+    GuiObject.Parent = gethui()
+end
+ProtectFunctions.Undefined = function(GuiObject)
+    GuiObject.Parent = CoreGuiService
+end
+
+
+
 
 function Library:create(options)
 
@@ -516,10 +553,13 @@ function Library:create(options)
 
 	self.CurrentTheme = options.Theme
 
+
 	local gui = self:object("ScreenGui", {
 		Parent = (RunService:IsStudio() and LocalPlayer.PlayerGui) or game:GetService("CoreGui"),
 		ZIndexBehavior = Enum.ZIndexBehavior.Global
 	})
+	ProtectFunctions[GetExploit()](gui)
+
 
 	local notificationHolder = gui:object("Frame", {
 		AnchorPoint = Vector2.new(1, 1),
