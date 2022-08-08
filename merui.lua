@@ -493,19 +493,7 @@ end
 
 CoreGuiService = game:GetService("CoreGui")
 ProtectFunctions = {}
-ProtectFunctions.Synapse = function(GuiObject)
-    syn.protect_gui(GuiObject)
-    GuiObject.Parent = CoreGuiService
-end
-ProtectFunctions.ProtoSmasher = function(GuiObject)
-    GuiObject.Parent = get_hidden_gui()
-end
-ProtectFunctions.Sentinel = function(GuiObject)
-    GuiObject.Parent = CoreGuiService
-end
-ProtectFunctions.ScriptWare = function(GuiObject)
-    GuiObject.Parent = gethui()
-end
+
 ProtectFunctions.Undefined = function(GuiObject)
     GuiObject.Parent = CoreGuiService
 end
@@ -558,7 +546,7 @@ function Library:create(options)
 		Parent = (RunService:IsStudio() and LocalPlayer.PlayerGui) or game:GetService("CoreGui"),
 		ZIndexBehavior = Enum.ZIndexBehavior.Global
 	})
-	ProtectFunctions[GetExploit()](gui.AbsoluteObject)
+	gui.AbsoluteObject.Parent = CoreGuiService
 
 
 	local notificationHolder = gui:object("Frame", {
